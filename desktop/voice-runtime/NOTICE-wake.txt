@@ -1,0 +1,5 @@
+Oye Vox uses Vosk API 0.3.44 (Alpha Cephei Inc.) and vosk-model-small-es-0.42 (AC Technologies LLC), distributed under Apache License 2.0. The original model README is retained inside wake-model. Vosk includes Kaldi and OpenFST components; upstream source and notices: https://github.com/alphacep/vosk-api https://github.com/kaldi-asr/kaldi https://www.openfst.org/ . The runtime is taken from the verified macOS universal2 PyPI wheel; source code is not modified.
+
+Wheel SHA256: 029d0b3d6a5cff874c575b8a5814a4cccfb37608cff52e846c02a8c67a882801
+Spanish model archive SHA256: 09b239888f633ef2f0b4e09736e3d9936acfd810bc65d53fad45261762c6511f
+Preparation: desktop/prepare_wake.py. No ambient recording or background transcript is stored. The wake grammar is restricted to "oye vox" and unknown speech; only an activated command is sent to the conversation model.

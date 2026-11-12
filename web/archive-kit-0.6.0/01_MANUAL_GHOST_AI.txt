@@ -1,0 +1,126 @@
+GHOST AI
+Manual de funcionamiento y base comercial
+Versión documentada 0.6.0 · 10 de noviembre de 2026
+Nombre de trabajo del prototipo. Marca e identidad comercial pendientes de definir.
+
+PROPÓSITO
+Enjambre de Vóxeles es un compañero de escritorio con avatar flotante y chat. El usuario elige un modelo de Ollama o una API de nube compatible. Las herramientas pertenecen a Ghost y se ejecutan en la app, con permisos y confirmaciones. Este documento describe la app existente y distingue las propuestas comerciales aún no implementadas.
+
+La entrega actual es una beta para macOS Apple Silicon. Hay estructura de Electron para Windows y Linux; no se han verificado ni entregado esas versiones. No presentar el proyecto como un servicio web que ya controla cualquier ordenador.
+
+1  QUÉ RECIBE EL USUARIO
+Un avatar flotante animado con estados de reposo, pensando y hablando; una ventana de chat; un asistente de primer inicio; ajustes del proveedor, memoria y permisos. El icono de Ghost en la barra superior abre la configuración y permite cerrar la app. El modelo no viene incluido: Ollama usa modelos que el usuario instala; una API necesita la cuenta, clave y modelo de su proveedor.
+
+2  PRIMER INICIO
+1. Abrir Ghost Overlay en un Mac compatible. El paquete de desarrollo todavía carece de firma y notarización de distribución.
+2. Elegir «En este equipo con Ollama» o «Conectar a una API».
+3. Con Ollama, mantener su servidor encendido, buscar los modelos instalados y seleccionar uno; el asistente permite descargar un modelo por nombre. La descarga puede ocupar varios GB.
+4. Con una API, elegir un proveedor predeterminado, introducir su clave y listar modelos o escribir el identificador exacto.
+5. Pulsar «Probar y usar este modelo». La prueba puede generar un cargo del proveedor. No envía los recuerdos durante esa comprobación inicial.
+6. Habilitar las acciones del Mac o el dictado únicamente si se quieren usar. Están apagados por defecto en una instalación nueva.
+
+Para volver de una API a Ollama: menú de Ghost → «Configurar modelo / primer inicio» → «En este equipo con Ollama» → seleccionar modelo → «Probar y usar este modelo». El cambio de proveedor conserva los datos locales. El nombre ghost-heretic corresponde a un modelo personalizado del equipo del desarrollador: no debe anunciarse como un modelo que todos los usuarios tendrán instalado.
+
+3  QUÉ OCURRE CON CADA MENSAJE
+Usuario → chat de Electron → servidor FastAPI local → decisión de Ghost.
+Los comandos directos reconocidos se resuelven sin pedir al modelo que elija una herramienta. Las preguntas informativas reconocidas pueden consultar fuentes web. Para las demás peticiones, se ofrece un catálogo de herramientas al modelo, si sus permisos lo permiten. El modelo devuelve texto o solicita una función conocida. Ghost valida el nombre, los argumentos y los permisos actuales antes de ejecutar nada.
+
+Una búsqueda de archivos o apertura de app solicita confirmación. La organización de archivos genera primero un plan con los movimientos y espera una confirmación separada. El resultado lo informa Ghost directamente: el texto del modelo por sí solo nunca constituye una prueba de ejecución.
+
+Solo se acepta una herramienta nativa por turno. No hay bucles autónomos de ejecución ni un intérprete de scripts generados. Si una API rechaza explícitamente herramientas con HTTP 400 o 422 por incompatibilidad, se conserva la conversación normal y los comandos directos. El estado se recuerda temporalmente por servidor y modelo. Errores de clave, saldo o conexión deben mostrarse como errores, no ocultarse como incompatibilidad.
+
+4  CATÁLOGO ACTUAL DE HERRAMIENTAS
+
+Buscar fuentes públicas — core_search_web
+Consultas como «qué es JSON» o búsquedas explícitas. Usa buscadores públicos y devuelve extractos y enlaces; no constituye una verificación exhaustiva. Hay caché breve y buscadores alternativos. No requiere activar un botón Internet. Escribir «sin internet» evita la búsqueda para esa pregunta; si se eligió un chat remoto, ese proveedor sigue recibiendo el mensaje. El selector nativo excluye la web en solicitudes personales o con señales de datos sensibles. Los buscadores pueden limitar, bloquear o no devolver resultados.
+
+Encontrar archivos — core_find_files
+Busca por parte del nombre o extensión, por ejemplo «busca el archivo informe» o «lista los archivos con extensión .csv». Si falta una pista, la pide. Con acciones locales habilitadas requiere confirmación. Revisa Escritorio, Descargas, Documentos, Música, Imágenes y Películas, o una raíz personalizada si existe esa configuración. Tiene límites por carpeta: 3500 entradas, 0,65 segundos y cinco resultados. Omite enlaces y archivos ocultos. Es una búsqueda rápida por nombre, no una lectura de contenidos ni un índice de todo el disco. Avisa si la revisión fue parcial o encontró errores de permisos.
+
+Reunir resultados — core_group_results
+Después de buscar, «organiza esos archivos en una carpeta» prepara una carpeta nueva Ghost_Archivos… en el Escritorio con SOLO los resultados recientes de esa conversación. Los resultados caducan a los diez minutos. La vista previa muestra las rutas de origen y destino. Requiere confirmar los movimientos. Renombra los destinos repetidos con sufijos. Un archivo cambiado o de otra unidad puede no moverse; el resultado informa los fallos. No prometer copiar entre volúmenes automáticamente.
+
+Deshacer agrupación — core_undo_group
+«Deshacer agrupación de archivos» prepara un plan para restaurar los archivos a sus ubicaciones originales. Requiere confirmar. No sustituye archivos nuevos que hayan aparecido en el origen. La acción está ligada a la conversación y al registro local.
+
+Organizar el Escritorio — core_desktop_plan
+«Organiza mi escritorio» clasifica hasta 1000 archivos sueltos por extensión en carpetas directamente dentro del Escritorio: Documentos, Imagenes, Comprimidos, Audio_video, Codigo_config y Otros. Reutiliza carpetas existentes equivalentes por nombre, mayúsculas y acentos. No crea una carpeta contenedora Ghost_Organizado en la versión 0.6.0. Omite carpetas, archivos ocultos y enlaces; no reorganiza de forma recursiva los proyectos del usuario. Los nombres repetidos reciben sufijos visibles en el plan. «Deshacer organización del escritorio» permite preparar la restauración. La posición visual de los iconos de Finder es independiente de esta clasificación.
+Para pasar de un lote antiguo a la nueva distribución: deshacer en la misma conversación, confirmar y volver a organizar. Solo se retiran las carpetas antiguas que hayan quedado vacías.
+
+Abrir una aplicación — core_open_app
+«Abre calculator» o una app permitida. Requiere confirmación y una lista de apps autorizadas en la configuración. No ofrece acceso libre a Terminal ni ejecuta comandos generados. Los alias no convierten una app no autorizada en autorizada. Las acciones del sistema se habilitan actualmente en macOS.
+
+5  MEMORIA Y ESTILO
+La app conserva conversaciones por sesión y recuerdos del usuario y de Ghost en archivos y una base SQLite local. «Ver memoria» muestra los recuerdos; «olvidar tu 1» y «olvidar ghost 1» eliminan entradas. «Así: respuesta corregida» guarda un ejemplo de estilo; esto no reentrena los pesos del modelo. El aprendizaje se puede apagar. No hay sincronización de cuentas, nube personal ni entrenamiento privado de un modelo implementados.
+Con un proveedor remoto, los mensajes y los recuerdos incluidos en su contexto se envían a ese proveedor. Las rutas obtenidas por las búsquedas y los planes locales se excluyen del contexto posterior de chat; los contenidos de archivos no se leen como parte de esas herramientas.
+
+6  VOZ
+Dictado por audio con Gemini, OpenAI o Groq, según el proveedor seleccionado y sus capacidades. El usuario habilita micrófono en ajustes y confirma el envío de audio. La transcripción usa el proveedor y puede generar cargos. La app no almacena el audio en disco como parte de esta función.
+Modo manual: pulsar Micrófono, hablar, detener, revisar y enviar.
+Modo «Enviar al pausar»: activar el modo, pulsar Micrófono y hablar; tras unos 1,6 segundos de pausa cierra la captura, transcribe y envía el texto. El detector usa nivel de audio, no comprensión semántica; ruido o pausas largas pueden alterar el corte. Sin frase detectada durante ocho segundos se cierra sin enviar audio. Hay un límite de 60 segundos. Un borrador escrito evita el envío automático para permitir revisión.
+Cada turno requiere iniciar el micrófono. No hay escucha permanente, palabra de activación ni Gemini Live en la app actual. El detector se verificó con señales simuladas; su comportamiento depende también del dispositivo real.
+La lectura de respuestas usa las voces del sistema; en macOS usa la voz nativa. No hay clonación de voz. La transcripción local para Ollama todavía está pendiente: no anunciar voz totalmente local.
+
+7  PRIVACIDAD Y SEGURIDAD
+El servidor de la app escucha en loopback, con puerto y token de acceso de la instancia. El modelo nunca recibe permisos de shell por elegir una herramienta. Una herramienta deshabilitada no se ofrece ni se ejecuta. Las confirmaciones nativas de búsqueda y apertura se ligan a mensaje, sesión y un identificador de un solo uso válido cinco minutos; los planes de archivos también tienen caducidad y confirmación propia.
+El modo público bloquea las acciones locales. No se debe publicar el FastAPI de escritorio en Vercel para permitir controlar Macs por internet. La web comercial, los pagos y la app de escritorio deben ser sistemas separados.
+Las claves se guardan en la configuración privada del usuario; no se ha implementado un almacén de secretos con Keychain o cifrado de extremo a extremo. No publicar claves, configuración real, historial, memoria, registros ni capturas con datos personales. El modo local describe la inferencia del chat con Ollama; no implica que una búsqueda web o un dictado de nube permanezcan en el equipo.
+
+8  MAPA DEL CÓDIGO PARA OTRO AGENTE
+Electron desktop/main.cjs: ventanas, overlay, menú y arranque del servidor.
+desktop/preload.cjs y policy.cjs: puente limitado y validación de configuración.
+servidor.py: API local, sesiones, permisos, confirmaciones y despachos.
+cerebro_ghost.py: personalidad, conversación, recuerdos y aprendizaje de estilo.
+agent_tools.py y tool_runtime.py: catálogo, selección nativa y ejecución validada.
+api_compatible.py: adaptación de chat/completions.
+file_actions.py: búsqueda acotada por nombre.
+desktop_actions.py: clasificar archivos del Escritorio y deshacer.
+group_actions.py: agrupar resultados recientes y deshacer.
+web_actions.py: búsqueda pública, filtrado y caché.
+voice_actions.py y static/speech-end.js: dictado y detector de pausa.
+static/app.js y compact-chat.html: conversación y confirmaciones visibles.
+desktop/speech.cjs: voz nativa de macOS.
+OVERLAY.md, README.md y tests/: ejecución y verificación.
+
+La entrega de código es Enjambre-de-Voxeles-proyecto-0.6.0.zip. Los ZIP de la app son binarios de distribución; no son la base editable para trabajar. Las verificaciones de la versión incluyen 42 pruebas automatizadas y pruebas con archivos y proveedores simulados. No equivalen a una certificación o prueba real de todos los proveedores y equipos.
+
+9  POSICIONAMIENTO PARA LA WEB
+Mensaje de trabajo: «Tu compañero de IA en el escritorio. Elige tu modelo y controla cada acción».
+Público inicial: usuarios de Mac con Ollama o una API propia que quieren un asistente visible para conversar, buscar archivos y mantener su escritorio ordenado.
+La web inicial debe explicar el producto, mostrar una demo con datos ficticios, dar instrucciones de instalación y recoger interés en una beta. Diferenciar chat, herramientas y voz; evitar prometer acceso irrestricto al sistema.
+No afirmar: compatible ya con todos los sistemas; cualquier modelo entiende herramientas; cero datos salen del equipo; búsquedas infalibles; autonomía total; voz local ya disponible; listo para la App Store; suscripciones activas.
+
+10  MONETIZACIÓN PROPUESTA TODAVÍA NO IMPLEMENTADA
+Hipótesis inicial: Free con chat Ollama y herramientas básicas; Pro con proveedores de nube mediante clave propia, perfiles de uso, automatizaciones avanzadas y temas originales. El paywall de APIs es una opción, no una decisión implementada. Su valor debe probarse: cobrar solo por introducir una clave puede ofrecer poco valor frente a clientes gratuitos.
+Propuesta para validar: licencia Pro de USD 29 por una versión principal, con doce meses de actualizaciones. Es un precio de prueba, no una tarifa vigente ni una promesa de venta. Definir qué ocurre después del periodo y los derechos de uso antes de vender. Ofrecer soporte e instalación como un servicio separado si se decide prestarlo.
+En un futuro, un servicio de IA administrado puede cobrar créditos o uso medido. No ofrecer uso de nube ilimitado sin conocer sus costes. En el modelo de clave propia, el usuario paga al proveedor de IA además de la licencia de Ghost.
+En la beta actual no existen cuentas, cobros, licencias, bloqueo Pro ni suscripciones. No bloquear a los probadores ni presentar funciones actuales como compras ya habilitadas. Si se introduce un plan Free, decidir explícitamente cómo se respetan los usuarios y funciones existentes.
+La implementación de pagos necesitará un servicio de licencias independiente, verificación de webhooks, permisos Pro, reglas de activación y reembolsos. Un botón oculto en el cliente no es una verificación de licencia. Conservar el uso local Free si el servicio de licencias falla. No almacenar claves de IA de usuarios en el sitio de marketing.
+Métricas de validación propuestas: visitas → interés en beta → instalación → conexión del modelo → primera acción confirmada → uso recurrente → disposición a pagar. No recolectar chats, rutas ni audio para medirlas; cualquier analítica deberá explicarse y limitarse.
+
+11  PUBLICACIÓN Y DERECHOS
+Recomendación de despliegue: repositorio privado en GitHub para el código de la web y Vercel con un plan adecuado para uso comercial. GitHub puede ser el repositorio sin que GitHub Pages sea el alojamiento. Vercel Hobby restringe el uso a proyectos personales no comerciales. GitHub Pages no permite usarlo como alojamiento gratuito para operar un negocio, comercio electrónico o SaaS comercial. Ver fuentes oficiales al final.
+El diseño del prototipo está inspirado en el Ghost de Destiny. Antes de vender, definir nombre e identidad originales y sustituir assets, textos, sonidos o elementos de terceros que no tengan derechos comerciales confirmados. La política de Bungie pide permiso y licencia para lucrar con sus assets. Un aviso de «fan project» no concede licencia comercial. La titularidad y disponibilidad de una marca nueva deben revisarse por separado.
+El repositorio externo Sefat3674/Ghost sirve de referencia y declara licencia MIT. Si se reutilizan partes cubiertas por ella, conservar los avisos aplicables y comprobar las licencias de dependencias y assets. Esa licencia no convierte en propios los elementos de Destiny ni cubre los pesos de los modelos de Ollama. La app actual no incorpora ese repositorio completo.
+Antes de venta pública también quedan pendientes una licencia del producto, firma y notarización de macOS, pruebas en equipos de terceros, un canal de soporte real y las políticas de privacidad y compra correspondientes. No inventar reseñas, clientes, auditorías, reseñas de App Store ni cifras de adopción.
+
+12  ORDEN DE TRABAJO PROPUESTO
+Primero: identidad original, demo beta veraz y manual de instalación.
+Después: landing con estado real de funciones y lista de espera funcional.
+Luego: validar demanda y precio con usuarios.
+Después de esa validación: pagos y licencias, pruebas de distribución, publicación comercial.
+Más adelante: dictado local, voz en tiempo real, versiones Windows y Linux y proyecto Maker basado en ESP32. Estas líneas son futuras, no funciones de la versión 0.6.0.
+
+FUENTES OFICIALES CONSULTADAS EL 10 DE NOVIEMBRE DE 2026
+Vercel Terms of Service, sección Hobby Plan:
+https://vercel.com/legal/terms
+Vercel Fair Use Guidelines:
+https://vercel.com/docs/limits/fair-use-guidelines
+GitHub Pages limits:
+https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits
+Bungie Intellectual Property and Trademarks:
+https://help.bungie.net/hc/en-us/articles/360049201911-Intellectual-Property-and-Trademarks
+Repositorio de referencia y su licencia:
+https://github.com/Sefat3674/Ghost
+https://github.com/Sefat3674/Ghost/blob/main/LICENSE
+Los precios y planes de Ghost propuestos en este documento son hipótesis propias para validación.

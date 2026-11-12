@@ -1,0 +1,44 @@
+DIRECTRIZ PARA EL PORT DE VÓXELES — FREE/PRO EN UNA SOLA APP (0.7.3)
+
+Continúa el port que ya estás haciendo. Integra estos cambios sin reemplazar tus adaptaciones de Windows/Linux por los archivos completos de macOS.
+
+DECISIÓN APROBADA
+Una sola app y un instalador por plataforma/arquitectura. Sin licencia: Free con Ollama local y Google Gemini oficial. Pro: demás proveedores compatibles, Ollama remoto y servidores personalizados. No limitar el nombre del modelo: el usuario elige cualquiera disponible para su proveedor/equipo. Todas las APIs usan claves del comprador; no hay créditos de IA incluidos. Memoria, voz local, Oye Vox y herramientas básicas siguen en Free, sujetas a compatibilidad real del port. No integrar control de Música: se retiró de esta versión. El control de apps se limita a abrir y solicitar cierre normal de las seleccionadas, sin forzar procesos ni descartar cambios. MusicKit catálogo permanece archivado; no portarlo ni anunciarlo.
+
+CAMBIOS A INTEGRAR
+- desktop/licensing.cjs: verificación de activación firmada y política de acceso.
+- licensing.py: el mismo contrato y control antes de llamadas a proveedores desde Python.
+- commercial/license-public-key.json: misma clave pública en las tres plataformas. Copiarla del proyecto actualizado. NO ejecutar --init para cada port: eso crearía un emisor incompatible.
+- desktop/main.cjs: integrar los nuevos manejadores de licencia y las comprobaciones en listar/probar/guardar proveedor. Establecer GHOST_LICENSE_FILE en el archivo de licencia de la carpeta privada de datos de la app y GHOST_LICENSE_ENFORCE=1 para el backend, independientemente del entorno heredado.
+- desktop/preload.cjs: licenseStatus(), activateLicense(token), removeLicense(). Usar validación de ventana de confianza antes de procesar IPC. No recibir un booleano pro del renderer como autorización.
+- static/setup.js: mostrar Free/Pro y bloquear opciones Pro sin licencia. No basta con ocultarlas: validar también en Electron y backend.
+- static/desktop-settings.html/js/css: estado de plan, activación y retirada. Mantener las diferencias de plataforma ya resueltas.
+- api_compatible.py, agent_tools.py, cerebro_ghost.py y voice_actions.py: controles de licencia antes de chat, herramientas nativas, aprendizaje y transcripción cloud. servidor.py: impedir consultas de estado al proveedor bloqueado y responder HTTP 402 a conversaciones bloqueadas, conservando las acciones locales.
+- requirements.txt / requirements-tested.txt: incluir cryptography y dependencias compatibles con cada SO/arquitectura. No reutilizar los binarios macOS.
+- desktop/prepare_backend.py: incluir commercial/license-public-key.json dentro del backend. package.json: empaquetar licensing.cjs y la clave pública también para Electron; adaptar las rutas si cambia la estructura del port.
+
+REGLAS DE ACCESO
+Free Ollama: protocolo ollama, hostname localhost/127.0.0.1/::1, raíz sin rutas adicionales ni credenciales de URL.
+Free Gemini: protocolo compatible openai, HTTPS, hostname exactamente generativelanguage.googleapis.com, puerto 443/predeterminado y ruta /v1beta/openai (barra final permitida).
+Todo otro endpoint requiere Pro. El nombre visible del proveedor, su id del catálogo y el nombre del modelo no conceden permisos. Impedir suplantaciones por subdominios/sufijos, puertos alternativos y rutas arbitrarias. Las solicitudes a proveedores no siguen redirecciones.
+
+CONTRATO DE ACTIVACIÓN BETA
+Archivo local JSON: {"token":"payload.signature"}. No incluirlo en instaladores ni repositorios.
+payload = base64url sin padding de un JSON UTF-8.
+signature = base64url sin padding de la firma Ed25519 de los bytes ASCII de payload; NO de los bytes JSON decodificados.
+Claims: v=1, product="voxel-swarm", plan="pro", id (string), iat y exp (segundos Unix enteros seguros). Comprobar producto, plan, firma, fecha de emisión y expiración. Una firma inválida o activación vencida vuelve a Free. Comprobar de nuevo al ejecutar llamadas a proveedores.
+
+ALCANCE REAL
+Esta beta usa activaciones firmadas manuales. No hay checkout, webhooks, límite de dispositivos, transferencia de puestos ni revocación online implementados. No aceptar una clave de Lemon Squeezy directamente ni simular cobros. No etiquetar el botón de retirada como cancelación de suscripción. La activación offline dura hasta exp; no inventar periodo extra de gracia. La contratación definitiva sigue pendiente.
+
+SEGURIDAD Y MIGRACIÓN
+Solo la clave pública va con el código/app. La clave privada del emisor pertenece al titular y no se comparte con el agente del port, repositorios, webs o compradores. No empaquetar desktop/issue-license.cjs como parte ejecutable de la app ni incluir el directorio work.
+Conservar configuración, memoria y claves existentes. No borrar datos por cambio de plan. Si un usuario existente tenía otro proveedor configurado, explicar el requisito Pro y permitir cambiar a Ollama/Gemini; no activar otra API ni modificar su servidor silenciosamente. No bloquear el arranque completo. Una licencia no concede permisos de micrófono, archivos ni aplicaciones.
+
+VERIFICACIÓN Y ENTREGA
+Usar tests/license-vectors.json con desktop/licensing.test.cjs y tests/test_licensing.py: Node/Python deben aceptar/rechazar las mismas firmas. Probar Free Ollama/Gemini; Pro válido; firma alterada; producto distinto; licencia vencida; URL falsa; Pro por URL manual; retirada y conservación de memoria. Probar también el instalador real para detectar rutas incorrectas de la clave pública y dependencias de cryptography.
+Entregar instalador por arquitectura realmente probada, notas y SHA256 para el catálogo común. No publicar ni activar ventas todavía. Coordinar los cambios compartidos de main/preload y empaquetado para evitar sobrescribir trabajo del port.
+
+CAMBIO 0.7.3 — APPS SIN CONTROL DE CONTENIDO
+Eliminar core_music, music_actions y cualquier opción de reproducción en Ajustes. Integrar core_close_app junto a core_open_app: comprobar que el usuario actual pide cerrar la app nombrada y que está en la selección autorizada. Los comandos directos son «abre/abrir [app]» y «cierra/cerrar [app]». No agregar confirmación propia repetida a apps autorizadas; respetar los avisos de cambios sin guardar del sistema. Conservar herramientas de archivos con sus confirmaciones.
+Adaptar el cierre a cada SO con mecanismos de cierre normal y detección del resultado. No usar taskkill /F, SIGKILL o killall como sustitutos; tampoco decir «cerrada» si solo se envió una solicitud. La implementación macOS utiliza Apple Events de quit con ruta del catálogo y script fijo; no copiar ese código a Windows/Linux. Si el entorno Linux/Wayland no permite un cierre fiable, mostrar la limitación en lugar de forzarlo. No gestionar reproducción, pulsaciones ni contenido interno de las aplicaciones.

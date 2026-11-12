@@ -1,0 +1,38 @@
+ENCARGO PARA EL AGENTE QUE CONSTRUIRÁ LA WEB
+Base del producto Enjambre de Vóxeles 0.6.0 · 10 de noviembre de 2026
+
+Actúa como diseñador y desarrollador de la web pública de un compañero de IA para escritorio. Usa el manual 01_MANUAL_GHOST_AI.txt y 04_CAPACIDADES.json como fuente de verdad sobre el producto. Enjambre de Vóxeles es el nombre interno del prototipo; la marca comercial y el personaje definitivo están pendientes. No rediseñes ni expongas el servidor local de la app para crear esta web.
+
+RESULTADO QUE NECESITO
+Un sitio editable, en español, con adaptación a móvil, listo para guardarse en un repositorio de GitHub y desplegarse en Vercel en un plan compatible con su finalidad comercial. Primera entrega: página de producto y captación de interés en beta. La infraestructura de cobro no está implementada. No publicar compras ni suscripciones hasta que existan políticas, entrega y verificación de licencias reales.
+
+ESTRUCTURA
+1. Portada: promesa clara, compañero visual original, etiqueta «Beta para macOS Apple Silicon» y acciones «Conocer la beta» y «Ver cómo funciona».
+2. Flujo en cuatro pasos: elegir modelo → pedir por chat o dictado compatible → revisar la acción → confirmar y obtener resultado.
+3. Herramientas actuales: fuentes web, búsqueda por nombre/extensión, organización directa del Escritorio, agrupación de resultados, deshacer y apertura de apps autorizadas.
+4. Local y nube: Ollama para inferencia local; presets de APIs compatibles; explicar que la capacidad depende del modelo y que el consumo de API lo paga el usuario si utiliza su propia clave.
+5. Voz y memoria: dictado con proveedores compatibles y cierre por pausa; voces del sistema; memoria local configurable. El dictado local y la escucha permanente todavía no existen.
+6. Privacidad y control: confirmaciones visibles, acciones limitadas y distinción entre datos locales y los que recibe un proveedor remoto.
+7. Planes propuestos: presentar Free y Pro como opciones en estudio; precio solo si está claramente identificado como propuesta de beta, sin botón de pago activo. Si se publica una lista de espera, no inventar un plan de pago vigente.
+8. Guía de inicio, preguntas frecuentes, cambios de versión y soporte.
+9. Pie: datos del responsable por completar con información real, privacidad, condiciones y estado de la beta. No inventar razón social, domicilio ni correo.
+
+DIRECCIÓN VISUAL
+Oscuro suave, texto muy legible, acento verde lima y detalles cian moderados. Usar un personaje geométrico nuevo que no reproduzca el Ghost de Destiny, logos de Bungie ni assets del juego. La infografía entregada es una explicación del producto, no un permiso para comercializar personajes de terceros. Mantener títulos simples, movimiento discreto y respetar prefers-reduced-motion. Nada de métricas falsas, logos de clientes inventados o testimonios ficticios.
+
+ARQUITECTURA SUGERIDA
+Usar un proyecto sencillo con TypeScript y componentes reutilizables; Next.js es una opción si se necesita un endpoint para la lista de espera. Guardar el contenido comercial en datos editables y mantener la app de escritorio en un proyecto separado. No subir los binarios de más de cien MB dentro del código de la landing; usar un canal de descarga de versiones que el dueño configure. Los enlaces públicos a la beta quedan pendientes hasta que existan URLs reales: no inventarlas y no enlazar rutas de la Mac del desarrollador desde la web pública.
+
+Para una lista de espera: consentimiento claro, validación de correo, límite de solicitudes y almacenamiento real en un servicio elegido por el dueño. Si no se ha configurado ese servicio, entregar la integración pendiente y una interfaz que diga que todavía no está disponible; no mostrar «Registro realizado» sin guardar el dato. No pedir claves de Gemini, OpenAI ni Ollama en la landing.
+
+Los pagos son una fase posterior: checkout alojado, webhook firmado y registro de permisos del producto en un servicio separado. No almacenar tarjetas, credenciales de IA ni archivos del usuario. Nunca permitir que una petición de la web ejecute herramientas del Mac. No confundir GitHub como repositorio con GitHub Pages como plataforma comercial de alojamiento; revisar las políticas citadas en el manual.
+
+CRITERIOS DE ENTREGA
+Diseño usable en móvil y escritorio; navegación con teclado; contraste legible; etiquetas de formularios; estados de carga/error reales; enlaces verificados; demo con archivos ficticios; funcionalidades futuras identificadas; ninguna clave dentro del bundle; configuración mediante variables de entorno cuando se necesite; instrucciones de ejecución y despliegue; archivos y cambios entregados para revisión antes de publicar. Añadir pruebas de los flujos funcionales que implementes, como la lista de espera o webhooks, cuando existan.
+
+ENTREGA POR FASES
+A. Mapa de secciones, textos y dirección visual con una marca provisional original.
+B. Sitio funcional y revisión local de móvil/escritorio.
+C. Conexión de servicios que el propietario autorice y configure.
+D. Propuesta concreta de despliegue y coste del hosting para aprobación antes de publicar.
+No anunciar como implementado algo que solo esté en el plan. No introducir cambios en la app de escritorio para hacer esta landing salvo que se encarguen por separado.

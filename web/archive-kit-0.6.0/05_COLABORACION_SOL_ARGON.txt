@@ -1,0 +1,48 @@
+COLABORACIÓN ENTRE SOL Y ARGON
+Cómo compartir el código sin pisar cambios
+Base de trabajo Enjambre de Vóxeles 0.6.0 · 10 de noviembre de 2026
+
+QUÉ COMPARTIR AHORA
+Entrega a cada agente el mismo Enjambre-de-Voxeles-proyecto-0.6.0.zip y este kit documental. Es el código editable. Enjambre-de-Voxeles-macOS-0.6.0.zip contiene la app compilada y no sustituye al código fuente. Los archivos de la Mac no aparecen automáticamente en el otro chat: adjunta el ZIP, o proporciona un repositorio al que ese agente tenga acceso real. Un enlace a un repositorio privado no concede acceso por sí mismo.
+
+El ZIP de fuente revisado contiene 73 archivos; no incluye carpetas de datos, bases SQLite, registros, .env, config.json ni overlay.json. Esto no sustituye una revisión del contenido antes de publicarlo. No adjuntes ~/Library/Application Support/Enjambre de Vóxeles, ni claves reales, memoria, conversaciones o capturas privadas. Usa un .env.example con valores ficticios y tests con fixtures. La versión fuente no incorpora todos los binarios ni node_modules: el agente debe leer las instrucciones y preparar sus dependencias si necesita ejecutarla.
+
+REPARTO RECOMENDADO PARA EMPEZAR
+Sol: mantenimiento de la app, backend, catálogo común de herramientas, permisos, pruebas y revisión final de integraciones.
+Argon: landing, textos del producto, presentación de capacidades, diseño visual original y guía de instalación para la web.
+Es un reparto de responsabilidades propuesto, no una afirmación de que uno de esos modelos sea mejor en una categoría. Se puede intercambiar según resultados. No encargar simultáneamente cambios al mismo archivo o función.
+
+FLUJO IDEAL CON GITHUB PRIVADO
+1. El propietario crea o autoriza un repositorio privado y sube una versión fuente limpia. Definir una etiqueta base, por ejemplo v0.6.0. No subir contraseñas, memoria ni paquetes grandes de la app al historial Git.
+2. Guardar la web en un repositorio separado o en una carpeta claramente separada, con su propio despliegue. Para este proyecto recomiendo un repositorio de la app y otro de la web.
+3. Cada tarea recibe un identificador, objetivo, versión o commit base, archivos que puede tocar y criterios de aceptación. Ejemplo APP-01 para una herramienta y WEB-01 para la landing.
+4. Usar una rama por tarea y una copia de trabajo independiente: codex/app-01-desktop para Sol y argon/web-01-landing para Argon, si ambos trabajan en el mismo repositorio. Son ejemplos; el propietario puede definir nombres distintos. Evitar que dos agentes editen a la vez la misma carpeta de trabajo.
+5. Cada agente entrega una propuesta de cambios o pull request con resumen, archivos afectados y resultados de verificación. La integración se hace desde una sola persona o agente designado, tras revisar el conjunto.
+6. Actualizar la rama principal y dar a ambos agentes el nuevo commit base antes de su siguiente tarea. Repetir las comprobaciones afectadas por los cambios. No aceptar como prueba que un agente diga «ya está probado» sin resultados o pasos reproducibles.
+7. Publicar la web o una versión de la app solo cuando el propietario autorice esa publicación concreta. Este manual no constituye autorización para publicar o enviar mensajes en su nombre.
+
+SI NO QUIERES USAR GIT TODAVÍA
+Copia el mismo ZIP fuente en dos chats. Asigna a uno solo web y al otro solo app. Pide un parche o un ZIP únicamente con los archivos modificados, más una lista exacta de cambios. Guarda cada entrega por separado. Entrega esas modificaciones al integrador junto con el ZIP base. No sustituyas la carpeta completa por dos versiones distintas ni mezcles archivos sin revisar qué versión se usó. Un diff requiere la base correcta; conservar siempre el original 0.6.0.
+
+CUANDO AMBOS TRABAJAN SOBRE LA APP
+Divide por módulos y acuerda el contrato antes de programar. Ejemplo: Sol define el formato de respuestas del backend; Argon modifica únicamente la interfaz para consumir ese formato. Especificar campos, tipos, errores y ejemplos ficticios. Si hay que cambiar el contrato compartido, asignar esa tarea a uno e informar al otro. Los permisos no se relajan para que una demo parezca funcionar.
+
+PLANTILLA DE TAREA PARA CUALQUIERA DE LOS DOS AGENTES
+Tarea: [identificador y título]
+Base: Enjambre de Vóxeles 0.6.0 o [commit verificado]
+Objetivo: [resultado observable]
+Ámbito permitido: [repositorio y archivos]
+Restricciones: conservar memoria y permisos; no ejecutar comandos del modelo; no usar claves reales; no modificar archivos personales; no publicar sin autorización.
+Contrato o dependencias: [API y módulos compartidos]
+Aceptación: [cómo demostrar que el cambio funciona]
+Entrega: cambios editables, lista de archivos, pruebas realizadas, limitaciones y pasos para verificar.
+Si necesitas modificar algo fuera del ámbito acordado, descríbelo antes de tocar los archivos que trabaja el otro agente.
+
+MENSAJE LISTO PARA SOL
+Te adjunto Enjambre-de-Voxeles-proyecto-0.6.0.zip y el kit documental. Mantén la app de escritorio y sus herramientas. Conserva memoria, permisos, confirmaciones y compatibilidad con Ollama/APIs. Argon trabajará en la web en otro repositorio o carpeta: no modifiques su trabajo sin acordar el cambio. Para cada tarea entrega cambios editables y verificaciones reproducibles, indicando la versión base. No publiques ni utilices claves o archivos personales durante pruebas. Antes de integrar una entrega de Argon, revisa su diff y los contratos compartidos.
+
+MENSAJE LISTO PARA ARGON
+Te adjunto el kit documental y, como referencia técnica, Enjambre-de-Voxeles-proyecto-0.6.0.zip. Crea la web siguiendo 02_ENCARGO_PARA_AGENTE_WEB.txt y 04_CAPACIDADES.json. Trabaja en un repositorio o carpeta independiente de la app. No modifiques el backend, los permisos ni el almacenamiento de Ghost. Usa identidad y gráficos originales, y distingue funciones existentes de propuestas. Entrega el sitio editable, instrucciones de ejecución/despliegue y verificaciones; no publiques ni actives pagos sin autorización. Evita pedir claves de IA a los visitantes. Consulta las restricciones de Vercel y GitHub Pages indicadas en el manual.
+
+CONVERSACIONES Y PROVEEDORES
+Alternar modelos en Ghost no sincroniza automáticamente los chats de desarrollo entre ChatGPT y Gemini. Este proceso comparte código y documentación entre tus agentes de trabajo. Un sistema multiagente automático necesitaría una integración y controles adicionales; no está implementado en esta entrega.

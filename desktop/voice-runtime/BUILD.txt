@@ -1,0 +1,9 @@
+whisper.cpp v1.9.5
+Source: https://github.com/ggml-org/whisper.cpp
+Revision: d1be6fde11ac6e0407606b4e42fe72d34add8037
+Source tarball SHA256: 645445da884df6dbd52b30f82d7be7c01d1767c938714e477e786b88d529e9f4
+Build: desktop/prepare_voice.py
+Target: macOS arm64 >= 12, static libraries, CPU + Apple Accelerate, Metal OFF, OpenMP OFF, native CPU specialization OFF.
+Input: WAV PCM mono 16 kHz via stdin. Output: text via stdout.
+Model: Whisper base multilingual (MIT), downloaded separately with pinned SHA256.
+This runtime does not use an API or ffmpeg. Third-party copyright and license notices are retained beside this file.

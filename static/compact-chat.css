@@ -1,0 +1,49 @@
+/* Shared with the avatar skin names; no filter on text or content. */
+:root{--skin-accent:#00ffff;--skin-secondary:#0088ff;--skin-rgb:0 255 255}
+:root[data-skin=azul]{--skin-accent:#0088ff;--skin-secondary:#74bfff;--skin-rgb:0 136 255}
+:root[data-skin=violeta]{--skin-accent:#b461ff;--skin-secondary:#d3a0ff;--skin-rgb:180 97 255}
+:root[data-skin=verde]{--skin-accent:#00ff88;--skin-secondary:#78d9ad;--skin-rgb:0 255 136}
+:root[data-skin=ambar]{--skin-accent:#ffaa00;--skin-secondary:#e5c078;--skin-rgb:255 170 0}
+html,body.compact-chat{height:100%;margin:0;overflow:hidden}.compact-chat{display:flex;flex-direction:column;background:#000000}.compact-chat>header{height:60px;min-height:60px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:1px solid #000000}.compact-chat>header strong{font-size:15px;color:var(--accent)}.compact-chat .connection{padding:8px 10px;font-size:10px}.compact-chat .workspace{height:auto;min-height:0;flex:1;border:0;border-radius:0;box-shadow:none}.compact-chat .chat-top{padding:14px 18px}.compact-chat .chat-top h2{font-size:15px;margin:5px 0 0}.compact-chat .chat-top .eyebrow{font-size:8px}.compact-chat .messages{padding:18px}.compact-chat .welcome{padding:4px 0}.compact-chat .welcome p{margin:0;color:#92998e;font-size:13px}.compact-chat #chat-form{margin:8px 12px 0}.compact-chat .chat-footer{padding:13px 14px}.compact-chat .key-hint{display:none}.compact-chat dialog{padding:24px}.compact-chat dialog h2{font-size:22px}.compact-chat .message-body{font-size:13px}
+
+.composer-bottom>div{flex-wrap:wrap;gap:8px}.composer-bottom button:not(#send){font-size:10px;color:var(--accent);padding:5px 2px}.action-card{border:1px solid var(--accent);border-radius:10px;padding:14px;margin:15px 0;background:#000000}.action-card h3{font-size:13px;color:var(--accent);margin:0 0 8px}.action-card p,.action-card summary{font-size:12px;line-height:1.6}.action-card ul{font-size:11px;line-height:1.7;max-height:220px;overflow:auto;padding-left:18px;overflow-wrap:anywhere}.action-card button{font-size:12px;padding:9px 12px;margin:8px 8px 0 0;border:1px solid var(--accent);border-radius:7px}.source-links a{display:block;font-size:12px;color:var(--accent);overflow-wrap:anywhere;margin:6px 0}.microphone-recording{color:#ffb787!important}
+
+#tools-settings{font-size:10px;color:var(--accent);padding:7px 0}.compact-chat>header{gap:8px}
+
+:root{--bg:#000000;--panel:#000000;--accent:var(--skin-accent);--cyan:var(--skin-accent);--muted:var(--skin-secondary);--line:var(--skin-accent)}body{background-color:#000000;color:#efffff}.muted,.eyebrow,.small{color:var(--muted)}input,select,textarea,dialog,.workspace,#chat-form,.message.user{background-color:#000000;border-color:var(--accent)}.connection,.icon-btn,fieldset,details,.secondary,.action-card{border-color:var(--accent)}button:focus-visible,a:focus-visible{outline-color:var(--accent)}
+
+/* Burbuja flotante anclada al avatar; el historial y los diálogos siguen accesibles. */
+html:has(body.bubble-chat),body.bubble-chat{background:transparent!important}
+body.bubble-chat{padding:12px;overflow:hidden;display:block}
+.bubble-frame{height:100%;display:flex;flex-direction:column;position:relative;background:#000000f5;border:1px solid rgb(var(--skin-rgb) / .5);border-radius:24px;box-shadow:0 8px 24px #0005;overflow:visible}
+.bubble-frame:after{content:"";position:absolute;top:90px;right:-6px;width:10px;height:10px;background:#000;border-top:1px solid rgb(var(--skin-rgb) / .5);border-right:1px solid rgb(var(--skin-rgb) / .5);transform:rotate(45deg);pointer-events:none}
+[data-anchor=right] .bubble-frame:after{right:auto;left:-6px;transform:rotate(225deg)}
+.bubble-chat .bubble-frame>header{height:46px;min-height:46px;padding:0 14px;display:flex;gap:8px;align-items:center;border-bottom:1px solid rgb(var(--skin-rgb) / .15);-webkit-app-region:drag}
+.bubble-chat header strong{font-size:14px;color:var(--accent);white-space:nowrap}.bubble-title{font-size:9px;color:var(--muted);margin-right:auto;white-space:nowrap}
+.bubble-chat header button{-webkit-app-region:no-drag;app-region:no-drag;padding:5px;border-radius:8px;font-size:17px;color:var(--accent)}
+.bubble-chat header .connection{display:none}.bubble-chat .workspace{background:transparent!important;border-radius:0 0 24px 24px;height:auto;flex:1;min-height:0}
+.bubble-chat .chat-top{display:none}.bubble-chat .messages{padding:12px 14px 6px;min-height:54px;overflow:auto}.bubble-chat .welcome{padding:0}.bubble-chat .welcome p{font-size:13px;color:#d8ffff;line-height:1.6;margin:0}.bubble-chat .welcome .bubble-hint{font-size:10px;color:var(--muted);margin-top:8px}
+.bubble-chat .message{margin-bottom:6px;animation:none}.bubble-chat .message-label{font-size:8px;margin-bottom:5px}.bubble-chat .message-body{font-size:13px;line-height:1.6}
+.bubble-chat:not(.bubble-expanded) .messages>.message{display:none}.bubble-chat:not(.bubble-expanded) .messages>.message.bubble-latest{display:block}
+.bubble-chat:not(.bubble-expanded) .message-body{display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.bubble-chat:not(.bubble-expanded) .source-links{display:none}.bubble-chat:not(.bubble-expanded) .source-links.bubble-latest-sources{display:block;max-height:42px;overflow:auto}.bubble-chat .source-links a{font-size:10px;margin:3px 0}
+.bubble-chat #chat-form{margin:5px 10px 0;padding:9px 10px 7px;border-color:rgb(var(--skin-rgb) / .33);border-radius:16px}.bubble-chat textarea{font-size:13px;min-height:38px;height:40px;line-height:1.5}.bubble-chat .composer-bottom>div{gap:4px 10px;flex-wrap:wrap}.bubble-chat .composer-bottom button:not(#send){font-size:9px;padding:3px 0}.bubble-chat #send{flex-shrink:0;width:31px;height:31px;border-radius:50%;margin-left:7px}.bubble-chat #speaker-test{display:none}.bubble-chat .chat-footer{padding:8px 13px 10px;gap:8px}.bubble-chat .chat-footer>span:last-child{display:none}.bubble-chat #model-caption{max-width:210px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:7px}
+.bubble-chat .notice{margin:0 10px;padding:5px 8px;font-size:10px;max-height:46px;overflow:auto}.bubble-chat dialog{max-height:calc(100vh - 44px);overflow:auto;max-width:calc(100vw - 48px);border-radius:18px;padding:20px}.bubble-chat dialog h2{font-size:21px}.bubble-chat .action-card{overflow-wrap:anywhere;max-width:100%}
+.bubble-expanded .chat-top{display:flex;padding:10px 14px}.bubble-expanded .chat-top .eyebrow{display:none}.bubble-expanded .chat-top h2{font-size:12px;margin:0}.bubble-expanded .messages{padding:12px 14px}.bubble-expanded .message{margin-bottom:18px}.bubble-expanded #speaker-test{display:inline-block}.bubble-expanded .message-body{overflow-wrap:anywhere}
+@media(max-width:359px){.bubble-title{display:none}.bubble-chat .chat-footer #model-caption{max-width:130px}.bubble-chat .composer-bottom>div{gap:3px 7px}}
+
+.bubble-frame:before{content:"";position:absolute;right:-10px;bottom:-10px;width:18px;height:18px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);border-radius:0 0 10px 0;pointer-events:none;z-index:10}
+
+/* Base chat rules also follow the selected skin. Status/error colors stay semantic. */
+.compact-chat textarea::placeholder,.compact-chat .chat-footer,.compact-chat .chat-footer button,.compact-chat dialog label,.compact-chat #voice,.compact-chat .search-indicator{color:var(--accent)}
+.compact-chat .search-indicator,.compact-chat dialog{border-color:var(--accent)}
+.compact-chat .primary:hover{background:var(--accent);color:#000}
+.compact-chat .connection i.online{box-shadow:0 0 8px rgb(var(--skin-rgb) / .33)}
+
+.bubble-chat .voice-status{margin:3px 14px 0;font-size:10px;line-height:1.4}
+
+.bubble-chat:not(.bubble-expanded) #auto-voice{display:none}
+
+.bubble-chat .voice-setup{margin:3px 12px 0;padding:5px 8px;font-size:10px;max-height:95px;overflow:auto;flex-shrink:0}.bubble-chat .voice-setup button{font-size:10px}
+
+.bubble-chat .wake-standby{margin:3px 14px;font-size:9px;line-height:1.4}.bubble-chat .wake-standby button{font-size:9px}

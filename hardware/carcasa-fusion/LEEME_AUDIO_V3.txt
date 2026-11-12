@@ -1,0 +1,55 @@
+GHOST AUDIO V3 — PROTOTIPO DE MONTAJE
+
+Ejecuta Ghost_Audio_V3.py dentro de Fusion sustituyendo el script anterior.
+Crea un documento nuevo, en modelado directo. Las medidas se cambian en CONFIG
+antes de ejecutar. No modifica las versiones anteriores.
+
+CAMBIO DE TAMAÑO
+Esta distribución usa núcleo de 90 mm, pared 2.4 mm y diámetro exterior
+aproximado entre corazas de 108 mm. Es una propuesta para ganar espacio de
+montaje, no una demostración de que 70 mm sea imposible. No reducir solamente
+el diámetro: las posiciones de los módulos y soportes también deben ajustarse.
+
+CONTENIDO
+01 Núcleo: apoyos de bandeja, cuna abierta del amplificador, soporte de
+   micrófono y cuatro brazos para las corazas.
+02 Tapa: guía de centrado con cuatro dedos de encaje, cuna circular para
+   altavoz de 40 x 18 mm y cinco ranuras acústicas. Orejetas para retención
+   mediante brida flexible sobre el borde, nunca sobre el cono.
+03 Aro del ojo: tres dedos de encaje con pequeños resaltos redondeados.
+04–07 Corazas: alojamientos rectangulares para los brazos, con agujeros de
+   2.4 mm para pasador/tornillo transversal de 2 mm. Estos paneles NO llevan
+   cierre automático. Revisar acceso al pasador antes de decidir el herraje.
+08 Bandeja PCB extraíble: rieles para PCB de 1.6 mm, tope y cuatro orejas.
+   Paso en orejas 2.5 mm; pilotos de soporte 2.0 mm. La tornillería y longitud
+   deben decidirse/probarse; no se generan roscas ni alojamientos de tuercas.
+
+MONTAJE PREVISTO
+Retira la bandeja, desliza la PCB por su extremo abierto y vuelve a fijarla a
+los apoyos. Los rieles presuponen bordes libres de componentes (aprox. 1.2 mm).
+No se conoce la posición de los componentes reales de la PCB personalizada.
+Monta micrófono/amplificador y cableado antes de la tapa con bocina. Los clips
+son provisionales: prever herramientas y acceso para desmontar antes de cerrar.
+Para vista separada usa separacion_vista=20.0; para ensamblado, 0.0.
+Las referencias ocultas NO se imprimen. Solo son volúmenes aproximados.
+
+DATOS
+Confirmados: PCB 30.92 x 27.56 x 1.6 mm; altavoz 40 x 18 mm; micrófono
+14 x 14 mm; PLA. Las alturas con cableado siguen sin medirse.
+Reserva amplificador: 22 x 22 x 12 mm, SIN confirmar dimensiones del módulo.
+Reserva micrófono: 14 x 14 x 6 mm; se supone puerto inferior central.
+Hay un conducto acodado hacia el lateral. Ajustar al puerto real del INMP441;
+no asumir que el orificio del chip coincide con el centro de la placa.
+Pantalla: reserva 36.4 x 36.4 x 10 mm procedente del primer script, pendiente
+confirmación. Su fijación específica y la posición del área visible faltan.
+Altavoz: el borde de apoyo de 2 mm es provisional; verificar el marco real.
+No incluye USB, batería, aislamiento acústico ni recorrido definitivo de cables.
+
+VALIDACIÓN
+Comprobadas sintaxis y reservas de electrónica con cálculos geométricos.
+No ejecutado en Fusion aquí: falta validar todas las operaciones booleanas,
+interferencias de las piezas, acceso de montaje y fijaciones.
+No imprimir el conjunto como versión final. Primero ejecutar en Fusion,
+inspeccionar secciones y probar una pequeña muestra del encaje en PLA.
+Una holgura de 0.30 mm y retención nominal de 0.15 mm son valores iniciales,
+no garantía de flexibilidad, tolerancia ni vida útil del cierre.

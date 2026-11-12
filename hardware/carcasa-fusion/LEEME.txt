@@ -1,0 +1,49 @@
+GHOST — PROTOTIPO PARA AUTODESK FUSION
+
+EJECUCIÓN
+1. En Fusion, abre Scripts y complementos y crea un script Python.
+2. Abre el archivo Python de ese script y sustituye su contenido completo
+   por Ghost_Carcasa.py. Guarda y ejecuta desde Fusion.
+3. Se crea un documento nuevo con dos componentes imprimibles:
+   Frente_y_4_corazas y Tapa_trasera. Guarda ese documento si deseas conservarlo.
+4. Para revisar el espacio ocupado por la electrónica, enciende los cuerpos
+   del componente REFERENCIAS_ocultas_NO_IMPRIMIR. No exportes esas referencias.
+5. Cambia CONFIG al principio del Python y vuelve a ejecutarlo para obtener
+   otra versión. El script genera sólidos en modo directo; no crea una
+   línea de tiempo paramétrica ni actualiza un documento previo.
+
+QUÉ CONTIENE
+- Núcleo esférico de 70 mm y pared de 2.4 mm.
+- Apertura frontal de 33 mm y bisel unido al núcleo.
+- Cuatro placas con curvatura esférica, grosor 3 mm y separación 6 mm.
+- Cuatro soportes fijos unen las placas al frente; no se mueven.
+- Tapa posterior con guía de centrado y holgura nominal de 0.30 mm.
+  La guía no es un cierre validado. Faltan retención y anclajes definitivos.
+- Reservas ocultas para pantalla, PCB personalizada y contorno del ESP32.
+
+MEDIDAS Y SUPOSICIONES
+- ESP32: 21 x 17.8 mm, indicado por el usuario. La referencia de 1 mm de
+  altura solo muestra el contorno; NO representa su altura real.
+- PCB personalizada: 30.92 x 27.56 mm tomados provisionalmente de la captura;
+  falta confirmar que esta sea la pieza medida. Altura provisional: 12 mm.
+- Módulo de pantalla: reserva rectangular 36.4 x 36.4 x 10 mm, basada en
+  el script inicial. NO es una especificación confirmada de tu módulo.
+- 1.28 pulgadas y 240 x 240 no especifican tamaño de PCB ni posición de pines.
+- Ojo de 33 mm: abertura provisional. Medir área visible y contorno del
+  módulo antes de fijar el diámetro, profundidad y sujeción.
+- Pantalla situada provisionalmente con su frente en Z=18 mm; extremo del
+  bisel en Z=32 mm. Está retranqueada 14 mm. Ajustar tras medir el módulo.
+- Las reservas no incluyen micrófono, bocina, batería ni recorrido de cables.
+- Sin taladros de montaje, paso USB, rejilla de audio ni retención de tapa.
+
+COMPROBACIÓN
+El script comprueba el encaje de las reservas rectangulares en la cavidad
+esférica y su separación axial. Es una comprobación preliminar, no garantiza
+inserción, acceso USB, visibilidad lateral, cableado ni montaje final.
+Las corazas aproximan la referencia; no reproducen sus detalles ornamentales.
+Verificado aquí: sintaxis Python y cálculos de reservas con CONFIG original.
+Pendiente: ejecución con el núcleo geométrico de Fusion e inspección del
+modelo generado; Fusion y la librería adsk no están disponibles en este entorno.
+
+API CONSULTADA
+https://help.autodesk.com/cloudhelp/ENU/Fusion-360-API/files/TemporaryBRepManager_Sample.htm

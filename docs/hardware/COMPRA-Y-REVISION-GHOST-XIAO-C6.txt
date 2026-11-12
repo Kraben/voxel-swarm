@@ -1,0 +1,83 @@
+VÓXELES FÍSICO — REVISIÓN DE CARCASA Y COMPRA
+Fecha: 11 de noviembre de 2026
+
+CONCLUSIÓN
+Conservar el frontal V3 ya impreso. No hay evidencia de que debamos rehacer toda la carcasa. Las modificaciones previstas son bisel/soporte de pantalla, adaptadores interiores y tapa posterior/soportes de USB y batería. Esto es una revisión de los scripts y sus reservas geométricas, no una validación del ensamblaje real en Fusion ni de la impresión física. No se modificó el diseño original.
+
+FUENTE LOCAL REVISADA
+<PROYECTO_CARCASA>/outputs/Ghost_Carcasa/Ghost_Audio_V3.py
+<PROYECTO_CARCASA>/outputs/Ghost_Carcasa/Ghost_Tapa_USB_V3.py
+<PROYECTO_CARCASA>/outputs/Ghost_Carcasa/LEEME_AUDIO_V3.txt
+
+RESERVAS DEL DISEÑO
+Núcleo: 90 mm de diámetro, pared de 2.4 mm; radio interior 42.6 mm.
+Abertura del ojo: 33 mm. Bisel separado: radio exterior 23 mm.
+Unión posterior Z=-12 mm, holgura 0.30 mm; mantener guía y cuatro clips.
+XIAO: 21 x 17.8 mm. Portadora: 30.92 x 27.56 x 1.6 mm; altura poblada reservada 12 mm, todavía sin medir.
+Pantalla reservada: 36.4 x 36.4 x 10 mm, centro Z=22 mm; no corresponde a todos los módulos GC9A01.
+Bocina: diámetro 40 mm, fondo 18 mm; reserva desde Z=-35 hasta -17 mm.
+Bandeja: cara inferior Z=-6 mm. Entre bocina y bandeja hay 11 mm nominales, sin descontar cables ni soportes.
+Micrófono: 14 x 14 mm, reserva 6 mm de altura; conducto lateral con suposición de puerto inferior central.
+Amplificador: 22 x 22 x 12 mm reservados, soporte orientado X-Z.
+USB posterior: hueco estimado 10.34 x 4.56 mm; no incluye una abrazadera para absorber el esfuerzo del conector.
+La batería no forma parte de las reservas originales.
+
+COMPRA BASE PARA FUNCIONAR POR USB — CANTIDAD 1 DE CADA MÓDULO
+1. Seeed Studio XIAO ESP32-C6. Reutilizar la que ya tengas; no comprar otra por esta lista.
+2. Breakout INMP441 I2S, preferentemente PCB de 14 x 14 mm y puerto inferior, con dibujo/foto de la posición exacta del puerto. Alimentación del chip 1.8–3.3 V. Comprar el módulo, no el chip suelto. No sustituir por MAX4466/MAX9814/PDM sin adaptar firmware y montaje.
+3. Breakout MAX98357A I2S (variante A), PCB de hasta 22 x 22 mm; verificar también la altura de terminales/pines. Referencia verificable: Adafruit 3006, PCB publicada 19.4 x 17.8 mm. La altura montada puede ser mayor que el dato de PCB por el borne y cableado. No sustituir por PAM8403: no tiene entrada I2S.
+4. Bocina pasiva de 40 mm de diámetro exterior total, profundidad máxima 18 mm, 8 ohmios y unos 2 W nominales. Pedir medidas del marco completo, no solo del cono; revisar borde de apoyo y salientes. La potencia nominal no es una promesa del volumen que obtendremos. El MAX98357A admite esta carga; no unir los terminales de bocina a GND.
+5. Pantalla redonda GC9A01, 1.28 pulgadas, 240 x 240, SPI, sin táctil ni placa ESP32 integrada, lógica de 3.3 V. Pedir dimensiones del módulo y conector antes de pagar. No asumir que la PCB mide 36.4 mm porque use ese controlador.
+6. Fuente USB regulada de 5 V / 2 A de calidad y cable USB-C con datos para programación. Usar una fuente de alimentación a la vez; no conectar fuentes de 5 V entre sí.
+7. Extensión corta y flexible USB-C macho-hembra, con datos y alimentación, cuerpo hembra compacto; elegir longitud y extremo macho según el recorrido real. No dar por válido el hueco estimado de la tapa hasta medir el cable.
+8. Pulsador momentáneo normalmente abierto pequeño (por ejemplo 6 x 6 mm) para hablar/activar/silenciar durante pruebas. Se puede empezar con un botón de la placa y añadir el pulsador accesible en la tapa.
+9. Portadora existente de 30.92 x 27.56 mm, solo si el circuito/pinout resulta compatible. Si no, placa portadora nueva adaptada a la bandeja. Falta revisar su esquema: las medidas exteriores no prueban compatibilidad eléctrica.
+10. Cable flexible fino para señales, cable de alimentación adecuado, conectores compatibles, termorretráctil, bridas pequeñas y junta de espuma/silicona para micrófono y borde de bocina. Para banco: protoboard/cables de prueba si no los tienes.
+11. Tornillería de prueba para la bandeja: los pasos son 2.5 mm y los pilotos de apoyo 2 mm; hay que probar tipo y largo antes de comprar un lote o instalar insertos. Los paneles tienen alojamientos transversales de unos 2.4 mm para pasadores/tornillos de 2 mm. No se conocen todavía longitudes finales.
+
+PANTALLA Y FRONTAL
+Como ejemplo, Waveshare publica 40.4 x 37.5 mm y área activa circular de 32.4 mm para su módulo 1.28 GC9A01. Es mayor que la reserva de PCB original, pero la abertura de 33 mm es compatible nominalmente con esa área activa (solo 0.3 mm de margen radial: necesita buen centrado).
+Con una altura supuesta de 10 mm y posición original, la envolvente rectangular de ese módulo, incluyendo margen 0.5 mm por eje, tiene radio extremo de unos 39.44 mm, menor que el radio interior de 42.6 mm. Esto solo comprueba la esfera: no comprueba todas las interferencias, fijaciones, conectores ni posición real del cristal.
+El bisel es independiente: puede rehacerse junto con el soporte de pantalla sin reimprimir el frontal. La reserva Z=22 mm deja la cara del módulo varios milímetros detrás del bisel; hay que posicionar el cristal usando el módulo real para evitar un ojo muy hundido o sombras.
+
+MICRÓFONO Y AUDIO
+El conducto de la carcasa supone que el puerto queda en el centro del breakout. Muchos breakouts no lo tienen ahí. Usar adaptador y junta estanca al conducto; no tapar el puerto ni pegar sobre él. No asumir que la cápsula oye correctamente desde el interior cerrado.
+Separar mecánicamente micrófono y bocina y sellar el borde de esta última con junta apropiada. Un micrófono dentro de la misma esfera no garantiza conversación a distancia ni interrupciones fiables mientras habla la bocina. Se necesitan pruebas y procesamiento de eco.
+En la fase USB, el amplificador se alimenta desde la línea de 5 V adecuada; no cargar su potencia sobre el regulador 3.3 V de la XIAO. El micrófono usa 3.3 V. La pantalla depende del breakout real. No conectar aún sin pinout definitivo y revisión de la portadora.
+
+BATERÍA — SEGUNDA ETAPA, NO NECESARIA PARA LA PRIMERA CONVERSACIÓN
+Referencia previamente elegida: LiPo 603030 de 3.7 V, 500 mAh, 30 x 30 x 6 mm. Si ya la tienes, reutilizar tras verificar ficha, protección, polaridad y corriente de descarga/carga. No comprar otra hasta confirmar esos datos.
+Una reserva de batería de ese tamaño centrada aproximadamente en Z=-12 mm queda en la cavidad esférica y en el hueco nominal de 11 mm entre bocina y bandeja. Es una ubicación candidata, NO un montaje validado: necesita soporte sin presión, espacio para protección, terminales, cables y separación de la bocina.
+La XIAO-C6 ya incorpora cargador. No comprar TP4056 como requisito ni conectar dos cargadores a la misma celda. El pin 5 V queda sin tensión cuando solo funciona con batería, por lo que falta resolver alimentación del amplificador y pantalla en modo portátil. El MAX98357A admite 2.5–5.5 V, pero alimentarlo desde batería no elimina la necesidad de revisar regulación, consumo y operación con USB.
+Elegir después interruptor, protección si falta, regulación y gestión de alimentación que permita el comportamiento deseado al cargar. No elegir un boost genérico ni prometer autonomía basándose solamente en 500 mAh. Confirmar medidas de conectores y cuerpo USB antes de imprimir la tapa final.
+
+XIAO-C6 Y EXPERIENCIA JARVIS
+La C6 puede servir como terminal de audio/pantalla por Wi-Fi con Vóxeles en el ordenador. La IA, memoria y voz de mayor tamaño no se ejecutan en sus 512 KB de SRAM. La pantalla necesita animaciones simples y buffers pequeños; evitar plantearla como reproductor de vídeo con varios framebuffers grandes.
+Presupuesto preliminar: 4 señales para I2S compartido de micrófono/altavoz, unas 5 para LCD SPI sin lectura y 1 para botón, de 11 GPIO de cabecera. Reset, retroiluminación y futuras funciones pueden cambiar este reparto; no comprar pantalla táctil/SD como extras automáticos. El pinout definitivo depende de la portadora y el módulo de pantalla.
+El controlador I2S de la C6 admite TX/RX. Eso no resuelve por sí solo sincronización de formatos, eco ni reconocimiento de voz. El firmware debe configurarlos y probarlos.
+En el Kconfig de xiaozhi consultado, la implementación AFE compartida y el modo de palabra personalizada requieren S3/P4/S31 con PSRAM. C6 tiene una ruta WakeNet más limitada; no basta escribir Oye Vox en un ajuste para entrenarla. Como primera vía se puede pulsar un botón; después evaluar detección de Oye Vox en Vóxeles a partir del audio local de la placa o un modelo compatible real.
+Si la placa aún no se ha comprado y se prioriza procesar voz compleja en el propio dispositivo, comparar una XIAO ESP32-S3 con PSRAM. No es requisito cambiar para el prototipo dependiente del Mac, ni hay motivo demostrado para rehacer todo el frontal por ello.
+
+SOFTWARE QUE TODAVÍA FALTA
+La app 0.7.3 NO incorpora aún conexión de un ESP32. Faltan firmware para esta placa/pinout, transporte de audio y estados, reproducción en el dispositivo, emparejamiento y una pasarela local autenticada en Vóxeles. No conectar el dispositivo exponiendo a internet el FastAPI de escritorio ni activar modo público para permitir skills locales.
+La primera meta comprobable es: botón -> captura -> Mac -> transcripción/modelo/herramienta -> audio de respuesta -> bocina. Luego pantalla, activación por voz, cancelación y batería. Recordatorios/calendario y otras skills futuras siguen pendientes independientemente del hardware.
+No he confirmado un perfil precompilado de xiaozhi que coincida exactamente con XIAO-C6 + estos módulos. Soporte del chip no significa que el firmware de otra placa tenga el pinout correcto. Fish/ElevenLabs son proveedores opcionales de voz del backend; no requieren módulos electrónicos propios.
+
+ORDEN PARA EVITAR REIMPRESIONES
+1. Conservar frontal, clips y dimensiones de unión actuales.
+2. Elegir módulos con medidas verificables, en especial pantalla, micrófono y conector USB. Revisar el esquema de la portadora.
+3. Probar audio por USB y Wi-Fi en banco antes de soldar todo dentro.
+4. Preparar adaptadores removibles y posicionar pantalla/micrófono.
+5. Ajustar tapa posterior, fijación USB y, después, soporte/alimentación de batería.
+6. Validar secciones e interferencias del ensamblaje real antes de imprimir la tapa final. No cambiar el diámetro o escala del frontal.
+
+FUENTES PRIMARIAS CONSULTADAS
+https://wiki.seeedstudio.com/xiao_esp32c6_getting_started/
+https://docs.espressif.com/projects/esp-idf/en/stable/esp32c6/api-reference/peripherals/i2s.html
+https://invensense.tdk.com/wp-content/uploads/2015/02/INMP441.pdf
+https://www.analog.com/en/products/max98357a.html
+https://www.adafruit.com/product/3006
+https://www.waveshare.com/wiki/1.28inch_LCD_Module
+https://www.waveshare.com/product/displays/lcd-oled/1.28inch-lcd-module.htm
+https://raw.githubusercontent.com/78/xiaozhi-esp32/main/main/Kconfig.projbuild
+https://raw.githubusercontent.com/78/xiaozhi-esp32/main/main/audio/codecs/no_audio_codec.cc

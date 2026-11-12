@@ -1,0 +1,46 @@
+# Private configuration and user data
+.env
+.env.*
+!.env.example
+config.json
+overlay.json
+license.json
+data/
+*.sqlite3
+*.sqlite3-*
+*.pem
+*.p8
+*.p12
+*.key
+*.token
+*.mobileprovision
+*.provisionprofile
+# Dependencies and generated assets
+.venv/
+venv/
+**/node_modules/
+**/__pycache__/
+*.pyc
+**/work/
+**/backend/
+**/Backend/
+**/backend-*/
+**/release*/
+dist/
+*.spec
+*.app/
+*.zip
+*.dmg
+*.exe
+*.dylib
+*.dll
+*.so
+**/wake-model/
+**/voice-runtime/whisper-cli
+**/voice-runtime/whisper-cli.exe
+*.bin
+# Local IDE / OS files
+.DS_Store
+**/xcuserdata/
+*.xcuserstate
+*.log

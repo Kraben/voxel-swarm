@@ -1,0 +1,21 @@
+// !$*UTF8*$!
+{archiveVersion = 1; classes = {}; objectVersion = 56; objects = {
+B10000000000000000000001 = {isa = PBXBuildFile; fileRef = B10000000000000000000002;};
+B10000000000000000000002 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bridge.swift; sourceTree = "<group>";};
+B10000000000000000000003 = {isa = PBXFileReference; explicitFileType = wrapper.application; path = VoxelMusic.app; sourceTree = BUILT_PRODUCTS_DIR;};
+B10000000000000000000004 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>";};
+B10000000000000000000005 = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxelMusic.entitlements; sourceTree = "<group>";};
+B1000000000000000000000A = {isa = PBXGroup; children = (B10000000000000000000002,B10000000000000000000004,B10000000000000000000005,B1000000000000000000000B); sourceTree = "<group>";};
+B1000000000000000000000B = {isa = PBXGroup; children = (B10000000000000000000003); name = Products; sourceTree = "<group>";};
+B10000000000000000000014 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (B10000000000000000000001); runOnlyForDeploymentPostprocessing = 0;};
+B10000000000000000000015 = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+B10000000000000000000016 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0;};
+B1000000000000000000001E = {isa = PBXNativeTarget; buildConfigurationList = B1000000000000000000002A; buildPhases = (B10000000000000000000014,B10000000000000000000015,B10000000000000000000016); buildRules = (); dependencies = (); name = VoxelMusic; productName = VoxelMusic; productReference = B10000000000000000000003; productType = "com.apple.product-type.application";};
+B1000000000000000000001F = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = YES; LastSwiftUpdateCheck = 1600; LastUpgradeCheck = 1600; }; buildConfigurationList = B10000000000000000000029; compatibilityVersion = "Xcode 14.0"; developmentRegion = es; hasScannedForEncodings = 0; knownRegions = (es,en,Base); mainGroup = B1000000000000000000000A; productRefGroup = B1000000000000000000000B; projectDirPath = ""; projectRoot = ""; targets = (B1000000000000000000001E);};
+B10000000000000000000029 = {isa = XCConfigurationList; buildConfigurations = (B10000000000000000000033,B10000000000000000000034); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+B1000000000000000000002A = {isa = XCConfigurationList; buildConfigurations = (B10000000000000000000035,B10000000000000000000036); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release;};
+B10000000000000000000033 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Debug;};
+B10000000000000000000034 = {isa = XCBuildConfiguration; buildSettings = {CLANG_ENABLE_MODULES = YES; MACOSX_DEPLOYMENT_TARGET = 14.0; SDKROOT = macosx; SWIFT_VERSION = 5.0; }; name = Release;};
+B10000000000000000000035 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CODE_SIGN_ENTITLEMENTS = VoxelMusic.entitlements; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.voxelswarm.desktop.music; PRODUCT_NAME = VoxelMusic; SWIFT_OPTIMIZATION_LEVEL = "-Onone"; }; name = Debug;};
+B10000000000000000000036 = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CODE_SIGN_ENTITLEMENTS = VoxelMusic.entitlements; ENABLE_APP_SANDBOX = YES; ENABLE_HARDENED_RUNTIME = YES; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = Info.plist; PRODUCT_BUNDLE_IDENTIFIER = com.voxelswarm.desktop.music; PRODUCT_NAME = VoxelMusic; SWIFT_OPTIMIZATION_LEVEL = "-O"; }; name = Release;};
+}; rootObject = B1000000000000000000001F;}

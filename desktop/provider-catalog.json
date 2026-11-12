@@ -1,0 +1,56 @@
+[
+  {
+    "id": "openai",
+    "name": "OpenAI",
+    "provider": "openai",
+    "host": "https://api.openai.com/v1",
+    "help": "https://developers.openai.com/api/reference/overview",
+    "note": "Usa una clave de la plataforma API. El consumo depende de tu cuenta y del modelo elegido."
+  },
+  {
+    "id": "gemini",
+    "name": "Google Gemini",
+    "provider": "openai",
+    "host": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "help": "https://aistudio.google.com/apikey",
+    "note": "Usa una clave de Gemini API de Google AI Studio. Elige un modelo compatible disponible para tu cuenta."
+  },
+  {
+    "id": "deepseek",
+    "name": "DeepSeek",
+    "provider": "openai",
+    "host": "https://api.deepseek.com",
+    "help": "https://api-docs.deepseek.com/",
+    "note": "Usa tu clave de DeepSeek y selecciona uno de los modelos disponibles para tu cuenta."
+  },
+  {
+    "id": "groq",
+    "name": "Groq",
+    "provider": "openai",
+    "host": "https://api.groq.com/openai/v1",
+    "help": "https://console.groq.com/docs/openai",
+    "note": "Usa una clave de Groq. La lista de modelos y los límites dependen de tu cuenta."
+  },
+  {
+    "id": "openrouter",
+    "name": "OpenRouter",
+    "provider": "openai",
+    "host": "https://openrouter.ai/api/v1",
+    "help": "https://openrouter.ai/docs/quickstart",
+    "note": "Permite acceder a modelos de distintos proveedores desde tu cuenta de OpenRouter."
+  },
+  {
+    "id": "ollama-remote",
+    "name": "Mi servidor Ollama",
+    "provider": "ollama",
+    "host": "",
+    "note": "Introduce la dirección HTTPS de tu servidor Ollama o de tu túnel local."
+  },
+  {
+    "id": "custom",
+    "name": "Otro servidor compatible",
+    "provider": "openai",
+    "host": "",
+    "note": "Usa la dirección base indicada por tu proveedor y el formato de API que admita."
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "beta_signed_activation",
+  "product": "voxel-swarm",
+  "features": {
+    "local_chat": {
+      "plan": "free",
+      "implemented": true
+    },
+    "local_memory": {
+      "plan": "free",
+      "implemented": true
+    },
+    "local_voice": {
+      "plan": "free",
+      "implemented": true
+    },
+    "wake_word": {
+      "plan": "free",
+      "implemented": true
+    },
+    "basic_desktop_tools": {
+      "plan": "free",
+      "implemented": true
+    },
+    "remote_ai_providers": {
+      "plan": "pro",
+      "implemented": true,
+      "description": "Excepto Gemini oficial; incluye Ollama remoto y endpoints personalizados."
+    },
+    "calendar": {
+      "plan": "pro",
+      "implemented": false
+    },
+    "reminders": {
+      "plan": "pro",
+      "implemented": false
+    },
+    "messaging_connectors": {
+      "plan": "pro",
+      "implemented": false
+    },
+    "gemini_api": {
+      "plan": "free",
+      "implemented": true
+    }
+  },
+  "licensing": {
+    "billing_model": "pending_owner_decision",
+    "payment_provider": "pending_owner_decision",
+    "price": null,
+    "enforcement": "signed_pro_grant_ed25519",
+    "activation_method": "manual_beta",
+    "device_limit": null,
+    "online_revocation": false,
+    "offline_access": "until_signed_grant_expiry"
+  },
+  "excluded": [
+    "music_control",
+    "musickit_catalog"
+  ]
+}

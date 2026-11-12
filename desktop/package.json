@@ -1,0 +1,78 @@
+{
+  "name": "voxel-swarm",
+  "version": "0.7.3",
+  "description": "Enjambre de Vóxeles para escritorio",
+  "main": "main.cjs",
+  "private": true,
+  "author": "Enjambre de Vóxeles",
+  "scripts": {
+    "start": "electron .",
+    "prepare-backend": "python3 prepare_backend.py",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "setup-electron": "node node_modules/electron/install.js"
+  },
+  "build": {
+    "appId": "com.voxelswarm.desktop",
+    "productName": "Enjambre de Voxeles",
+    "asar": true,
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "policy.cjs",
+      "tray.png",
+      "package.json",
+      "ai-setup.cjs",
+      "provider-catalog.json",
+      "speech.cjs",
+      "bubble-policy.cjs",
+      "wake-service.cjs",
+      "wake-preload.cjs",
+      "licensing.cjs"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend"
+      },
+      {
+        "from": "../commercial/license-public-key.json",
+        "to": "commercial/license-public-key.json"
+      }
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "mac": {
+      "target": [
+        "zip"
+      ],
+      "category": "public.app-category.productivity",
+      "hardenedRuntime": false,
+      "identity": null,
+      "extendInfo": {
+        "NSMicrophoneUsageDescription": "Núcleo usa el micrófono al activar dictado, conversación por voz o Oye Vox. Oye Vox analiza voz localmente aunque la burbuja esté cerrada; puedes silenciarlo desde su menú.",
+        "CFBundleDisplayName": "Enjambre de Vóxeles",
+        "NSAppleEventsUsageDescription": "Vóxeles solicita cerrar las aplicaciones autorizadas únicamente cuando se lo pides. La app puede mostrar su aviso para guardar cambios."
+      },
+      "icon": "voxels.icns"
+    },
+    "win": {
+      "target": [
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    },
+    "executableName": "VoxelSwarm",
+    "afterPack": "after-pack.cjs"
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0"
+  }
+}

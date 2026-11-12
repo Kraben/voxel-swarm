@@ -1,0 +1,1 @@
+Optional signed VoxelMusic.app goes here. Build with desktop/prepare_music.py after configuring Apple Developer. Never ship a .p8 private key or user token. MusicKit generates tokens automatically from the signed app identity and registered App Service.

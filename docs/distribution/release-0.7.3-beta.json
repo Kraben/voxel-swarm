@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "product": "voxel-swarm",
+  "version": "0.7.3",
+  "channel": "beta",
+  "published": false,
+  "artifacts": [
+    {
+      "platform": "macos-arm64",
+      "file": "Enjambre-de-Voxeles-macOS-0.7.3.zip",
+      "bytes": 200926988,
+      "sha256": "f16503278b99c762fadb4ab6f665f855f19aaecf4c436fb4f3ae465c3bb472a7",
+      "download_url": null,
+      "signing_status": "not_verified"
+    }
+  ]
+}

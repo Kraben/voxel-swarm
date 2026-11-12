@@ -1,0 +1,18 @@
+{
+  "images": [
+    {
+      "idiom": "mac",
+      "filename": "voxels_core.png",
+      "scale": "1x"
+    },
+    {
+      "idiom": "mac",
+      "filename": "voxels_core@2x.png",
+      "scale": "2x"
+    }
+  ],
+  "info": {
+    "author": "xcode",
+    "version": 1
+  }
+}

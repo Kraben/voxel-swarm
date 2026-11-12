@@ -1,0 +1,33 @@
+Enjambre de Vóxeles 0.6.0
+Cambios de código e interfaz
+
+Proyecto activo: outputs/ghost-ai. Se actualizó el equivalente de backend de esa app. El proyecto independiente de <PROYECTO_EXTERNO_NO_INCLUIDO> no se modificó; contiene datos, modelos y otra línea de trabajo.
+
+Aplicado
+- Avatar anterior sustituido por una esfera de vóxeles cyan original generada en código. Se conservan reposo, pensando, hablando y reducción de movimiento. Área interactiva circular y nuevo icono de app y bandeja.
+- Interfaz, menús y placeholder «Transmitiendo al Núcleo…».
+- Paleta base: #000000, #00ffff y #0088ff. El overlay conserva transparencia para flotar sobre el escritorio.
+- Prompt con la representación visual exacta solicitada y la indicación «No tienes forma física». Se neutralizan descripciones visuales antiguas de la identidad al leerlas sin reescribir el archivo del usuario.
+- ARCHIVO_CORE_MEMORY y herramientas core_*; puente voxelDesktop y eventos voxel:*; motor VoxelBackend.
+- SwiftUI equivalente: App.swift y ContentView.swift, recurso voxels_core en Assets.xcassets y .clipShape(Circle()). Proyecto Xcode actualizado y compilado sin firma.
+- Infografía actualizada y cargador preparado para la imagen solicitada.
+
+Pendiente
+No se encontró watermarked_img_4881560662793473306.jpg ni un ZIP de HUD adicional. No se inventó ni se descargó una imagen con ese nombre. La infografía mantiene voxels_core.svg como recurso provisional; al colocar el JPG solicitado junto a ella el cargador podrá seleccionarlo. El asset nativo voxels_core es también provisional y debe reemplazarse cuando se entregue la imagen final. La eliminación visual anterior no certifica derechos sobre una imagen futura.
+
+Compatibilidad
+Se conservaron GHOST_* como variables de configuración, la ruta privada Application Support/Ghost AI y los nombres/formato de los archivos persistidos para no perder memoria, ejemplos ni claves. El nombre de un modelo instalado como ghost-heretic es un identificador del usuario, no se renombró ni se descargaron pesos. Las claves JSON de historial/memoria y el comando antiguo «olvidar ghost» siguen siendo compatibles; la UI ofrece «olvidar nucleo».
+La agrupación nueva usa Nucleo_Archivos_…. Los lotes antiguos y los registros de deshacer se conservan. No se borraron carpetas o versiones previas del usuario.
+Los archivos originales de referencia y las distribuciones históricas siguen disponibles en el workspace, pero no se incorporan al nuevo ZIP fuente. Las licencias de dependencias se mantienen.
+
+Comprobaciones
+43 pruebas Python y 9 pruebas Node de permisos, herramientas, memoria, identidad, geometría, ciclo de ventanas y voz. Xcode build sin firma correcto. Avatar y chat revisados en navegador con datos de prueba, sin usar las claves ni la memoria personales.
+
+Ejecutar
+Cerrar la versión anterior desde su menú antes de abrir Enjambre de Vóxeles.app. La app Electron es la distribución principal. El proyecto SwiftUI se entrega como código editable y conserva el flujo nativo anterior. Para reconstruirlo usar Preparar-motor.command y abrir macos/GhostAI.xcodeproj.
+
+Corrección 0.6.1
+Los nombres internos del paquete, los ejecutables y los helpers usan ASCII (VoxelSwarm); CFBundleDisplayName conserva «Enjambre de Vóxeles». Se añade verificación de metadatos en afterPack. Se verificó el arranque de la aplicación Electron completa mediante la interfaz nativa de macOS, incluyendo el avatar y la carga del chat. El informe de cierre de 0.6.0 ocurrió durante el arranque de Electron, antes de las funciones de IA. No se modifican memoria, modelos ni proveedores.
+
+Presentación 0.6.2
+Burbuja compacta anclada al avatar, historial ampliable, cierre personalizado y expansión automática de vistas previas. Verificado el arranque nativo en macOS, apertura de burbuja, ampliación del historial y retorno al avatar. 43 pruebas Python y 13 Node. No se añadieron recordatorios, calendarios, mensajería ni funciones de pago en esta actualización.

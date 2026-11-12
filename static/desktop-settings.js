@@ -55,10 +55,7 @@ window.voxelDesktop.getSettings().then(async config=>{
  const previous=config.allowedApps===undefined?['calculator','notes']:typeof config.allowedApps==='string'?config.allowedApps.split(',').map(x=>x.trim()).filter(Boolean):config.allowedApps;
  selectedApps=new Set(previous);configLoaded=true;field('config-save').disabled=false;
  if(config.hasKey)field('api-key').placeholder='Ya hay una clave guardada. Vacío la conserva.';
- if(config.platform!=='darwin'){
-  field('wake-word').disabled=true;field('wake-word').checked=false;field('skills').disabled=true;field('skills').checked=false;field('apps-picker').hidden=true;
-  field('config-note').textContent='Las skills actuales son exclusivas de macOS. El overlay y el chat funcionan en los tres sistemas.';
- }else await refreshApps();
+ await refreshApps();
  updateAppsGate();
 }).catch(()=>{field('config-error').textContent='No se pudo leer la configuración. Cierra y vuelve a abrir Ajustes.';});
 field('skills').onchange=updateAppsGate;

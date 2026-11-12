@@ -59,14 +59,18 @@
     },
     "win": {
       "target": [
-        "portable"
-      ]
+        "portable",
+        "zip"
+      ],
+      "icon": "tray.png"
     },
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "tar.gz"
       ],
-      "category": "Utility"
+      "category": "Utility",
+      "icon": "tray.png"
     },
     "executableName": "VoxelSwarm",
     "afterPack": "after-pack.cjs"

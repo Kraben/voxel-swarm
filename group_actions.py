@@ -17,12 +17,8 @@ def intent(text):
 def open_dir(path):
     p=Path(path)
     if not p.is_absolute() or '..' in p.parts:raise ValueError('Ruta local inválida.')
-    fd=os.open('/',FLAGS)
-    try:
-        for part in p.parts[1:]:
-            child=os.open(part,FLAGS,dir_fd=fd);os.close(fd);fd=child
-        return fd
-    except BaseException:os.close(fd);raise
+    if p.is_symlink():raise ValueError('Enlace no permitido.')
+    return os.open(str(p),FLAGS)
 
 def directory_id(fd):
     info=os.fstat(fd);return [info.st_dev,info.st_ino]

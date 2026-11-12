@@ -186,7 +186,6 @@ def estado():
 @app.get('/api/apps')
 def aplicaciones_instaladas():
     if PUBLICO:raise HTTPException(403,'El catálogo de aplicaciones solo está disponible en modo local.')
-    if skills_mac.platform.system()!='Darwin':return {'apps':[],'supported':False}
     return {'apps':app_catalog.installed_apps(),'supported':True}
 
 @app.get('/api/history/{session}')
@@ -274,7 +273,7 @@ def chat(mensaje: MensajeUsuario):
         elif skills_mac.es_skill(texto):
             comando = True
             if not PUBLICO and os.getenv('GHOST_ENABLE_SKILLS','0') == '1' and not mensaje.confirmar_skill and not skills_mac.es_accion_app(texto):
-                return {'requiere_confirmacion':True, 'respuesta':'Esta acción usa tu Mac. Confirma para ejecutarla.', 'popup':None}
+                return {'requiere_confirmacion':True, 'respuesta':'Esta acción usa tu equipo. Confirma para ejecutarla.', 'popup':None}
             respuesta = skills_mac.ejecutar_skill(texto, autorizado=mensaje.confirmar_skill)
         elif bajo == 'ver memoria':
             comando = True

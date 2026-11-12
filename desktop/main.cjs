@@ -53,7 +53,7 @@ async function startEngine() {
     GHOST_LICENSE_ENFORCE:'1',GHOST_LICENSE_FILE:licenseFile(),GHOST_DATA_DIR:path.join(support,'data'),GHOST_BIND:'127.0.0.1',GHOST_PORT:String(port),GHOST_PUBLIC:'0',GHOST_API_TOKEN:access,
     GHOST_ALLOWED_HOSTS:'127.0.0.1,localhost',GHOST_ALLOWED_ORIGINS:origin,OLLAMA_HOST:config.host,OLLAMA_API_KEY:config.apiKey,
     GHOST_PROVIDER:config.provider,GHOST_API_BASE:config.host,GHOST_API_KEY:config.apiKey,GHOST_MODEL:config.model,GHOST_MEMORY_MODEL:config.memoryModel,GHOST_LEARNING:config.learning?'1':'0',
-    GHOST_ENABLE_SKILLS:process.platform==='darwin' && config.skills?'1':'0',GHOST_ALLOWED_APPS_JSON:JSON.stringify(config.allowedApps),GHOST_SEARCH_ROOT:searchRoot(config.searchRoot),GHOST_ENABLE_WEB:'1',GHOST_ENABLE_MIC:config.microphone?'1':'0',GHOST_WEB_SEARCH:'0'}});
+    GHOST_ENABLE_SKILLS:config.skills?'1':'0',GHOST_ALLOWED_APPS_JSON:JSON.stringify(config.allowedApps),GHOST_SEARCH_ROOT:searchRoot(config.searchRoot),GHOST_ENABLE_WEB:'1',GHOST_ENABLE_MIC:config.microphone?'1':'0',GHOST_WEB_SEARCH:'0'}});
   const owned=engine;
   let launchError;
   owned.once('error',error=> {launchError=error;});
@@ -181,7 +181,7 @@ function createOverlay() {
 }
 function trusted(event,win) {return win && !win.isDestroyed() && event.sender===win.webContents && event.senderFrame===win.webContents.mainFrame && allowedURL(event.senderFrame.url,origin);}
 ipcMain.handle('voxel:speak',async(event,text)=>{
- if(!trusted(event,chat)||process.platform!=='darwin')return {ok:false};
+ if(!trusted(event,chat))return {ok:false};
  const generation=++speechEpoch;speechBusy=true;wakeService.pause();
  try{return await speech.speak(text);}finally{if(generation===speechEpoch){speechBusy=false;wakeService.sync(500);}}
 });

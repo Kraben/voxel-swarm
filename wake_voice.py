@@ -15,14 +15,27 @@ def runtime_root():
     if getattr(sys,'frozen',False):return Path(sys._MEIPASS)/'voice'
     return Path(__file__).parent/'desktop'/'voice-runtime'
 
+def library_name():
+    if sys.platform == 'win32':
+        return 'libvosk.dll'
+    if sys.platform == 'darwin':
+        return 'libvosk.dylib'
+    return 'libvosk.so'
+
 def available():
     root=runtime_root()
-    return (root/'libvosk.dylib').is_file() and (root/'wake-model'/'am'/'final.mdl').is_file()
+    lib=root/library_name()
+    return lib.is_file() and (root/'wake-model'/'am'/'final.mdl').is_file()
 
 def _load():
     global _library,_model
     if _library is None:
-        lib=c.CDLL(str(runtime_root()/'libvosk.dylib'))
+        root=runtime_root()
+        lib_path=root/library_name()
+        if sys.platform=='win32' and hasattr(os,'add_dll_directory') and root.is_dir():
+            try:os.add_dll_directory(str(root))
+            except OSError:pass
+        lib=c.CDLL(str(lib_path))
         signatures=[('vosk_set_log_level',[c.c_int],None),('vosk_model_new',[c.c_char_p],c.c_void_p),('vosk_model_free',[c.c_void_p],None),('vosk_recognizer_new_grm',[c.c_void_p,c.c_float,c.c_char_p],c.c_void_p),('vosk_recognizer_new',[c.c_void_p,c.c_float],c.c_void_p),('vosk_recognizer_accept_waveform',[c.c_void_p,c.c_char_p,c.c_int],c.c_int),('vosk_recognizer_final_result',[c.c_void_p],c.c_char_p),('vosk_recognizer_set_words',[c.c_void_p,c.c_int],None),('vosk_recognizer_free',[c.c_void_p],None)]
         for name,arguments,result in signatures:
             function=getattr(lib,name);function.argtypes=arguments;function.restype=result

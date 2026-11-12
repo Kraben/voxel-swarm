@@ -1,10 +1,76 @@
-# Enjambre de Vóxeles 0.6.0
+# Enjambre de Vóxeles 0.7.3 (Multiplataforma)
 
-La identidad visual actual es un enjambre holográfico circular. Las secciones de versiones anteriores se conservan como historial técnico. Consulta REBRANDING.txt para compatibilidad y recursos pendientes.
+Esta versión unifica la app de escritorio para **macOS, Windows y Linux** bajo una arquitectura común:
+- **Overlay Flotante**: Ventana transparente interactiva con forma de núcleo de vóxeles, animaciones integradas y chat compacto a demanda.
+- **Backend FastAPI**: Servidor local limitado a loopback (`127.0.0.1`) con autenticación Bearer mediante token efímero y puertos aleatorios privados.
+- **Voz Local**: «Oye Vox» mediante Vosk C API (0.3.44) en segundo plano y dictado local con whisper.cpp (v1.9.5).
+- **Adaptadores de Sistema (`system_adapters.py`)**: Abstracción nativa desacoplada para descubrimiento de aplicaciones, apertura/cierre cortés, búsqueda de archivos confinada y síntesis de voz del sistema.
 
-# Enjambre de Vóxeles · escritorio primero, Maker después
+---
 
-Esta versión añade una app independiente de la ventana SwiftUI anterior. El overlay utiliza Electron para compartir la ventana transparente, las animaciones y el chat entre macOS, Windows y Linux. Mantiene el motor FastAPI, la personalidad y el formato de memoria de Ghost. La app anterior de Xcode sigue en el proyecto.
+## 🎛️ Modelo de Licenciamiento Free / Pro (0.7.3)
+
+Una sola app e instalador por plataforma:
+1. **Plan Free (Sin Licencia)**:
+   - Ollama local (`http://127.0.0.1:11434` o `localhost`, sin credenciales en URL).
+   - Google Gemini Oficial (`https://generativelanguage.googleapis.com/v1beta/openai` en puerto 443).
+   - Voz local, «Oye Vox», memoria, personalización y herramientas locales de apps/archivos.
+2. **Plan Pro (Activación Beta Firmada)**:
+   - Desbloquea proveedores adicionales (OpenAI, Anthropic, DeepSeek, Groq, Mistral, Ollama remoto y servidores compatibles con OpenAI Chat Completions).
+   - Requiere token firmado offline con clave Ed25519 (`payload.signature`). Clave pública común en `commercial/license-public-key.json`.
+   - Control estricto en backend (`GHOST_LICENSE_ENFORCE=1`), devolviendo HTTP 402 ante intentos no autorizados.
+
+---
+
+## 🛡️ Herramientas de Sistema y Control de Apps (v0.7.3)
+
+- **Control de Música**: La integración con Apple Music / Música ha sido retirada por completo. No está presente ni anunciada en ninguna plataforma.
+- **Apertura de Aplicaciones (`core_open_app`)**:
+  - Exclusivamente para aplicaciones seleccionadas por el usuario en la lista autorizada de Ajustes.
+  - Comandos directos: «abre [app]» / «abrir [app]».
+- **Cierre Normal de Aplicaciones (`core_close_app`)**:
+  - Verifica que el usuario solicite explícitamente cerrar la app autorizada («cierra [app]» / «cerrar [app]»).
+  - Mecanismos de cierre cortés por sistema operativo:
+    - **macOS**: Apple Events quit via AppleScript (`tell application ... to quit`).
+    - **Windows**: PowerShell `.CloseMainWindow()` para permitir a las aplicaciones guardar cambios pendientes. **Nunca** se usa `taskkill /F`.
+    - **Linux**: `wmctrl -c` (mensaje `_NET_CLOSE_WINDOW`) o `pkill -15` (`SIGTERM`). **Nunca** se usa `SIGKILL` (-9). Si el entorno Wayland no lo permite, informa la limitación.
+- **Herramientas de Archivos**: Búsqueda en carpetas autorizadas, previsualización, confirmación explícita y plan de deshacer.
+
+---
+
+## 🐧 Comportamiento en Linux: X11 vs. Wayland
+
+| Característica | X11 / XWayland | Wayland Puro (`--ozone-platform=wayland`) |
+| :--- | :--- | :--- |
+| **Ventana Transparente Flotante** | Funciona de manera estándar (`alwaysOnTop`, `transparent: true`). | Restringido por la política de seguridad del compositor Wayland. |
+| **Passthrough de Clics (`setIgnoreMouseEvents`)** | Totalmente compatible fuera del núcleo de vóxeles. | El compositor puede ignorar peticiones de click-through desde clientes. |
+| **Atajos Globales de Teclado** | Registrados con `globalShortcut`. | Requiere soporte del portal XDG Desktop Portal. |
+| **Cierre de Ventanas Ajenas** | Soportado mediante EWMH (`wmctrl -c`). | Los clientes no pueden enviar eventos a ventanas de otros clientes. |
+
+> [!NOTE]
+> Se recomienda ejecutar el paquete Linux bajo **XWayland** (comportamiento predeterminado de Electron).
+
+---
+
+## 📦 Compilación y Empaquetado
+
+```bash
+# Preparar entorno
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# Descargar motores Vosk para todas las plataformas
+python desktop/prepare_wake.py --all
+
+# Empaquetar backend
+python desktop/prepare_backend.py
+
+# Construir aplicación
+python desktop/build_overlay.py pack   # Paquete desempaquetado en desktop/release
+python desktop/build_overlay.py dist   # Instalador / paquete distribuible
+```
+
 
 ## Qué hace
 

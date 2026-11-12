@@ -20,6 +20,10 @@ No están integrados ESP32, calendario, recordatorios, Telegram/WhatsApp ni cont
 
 La app macOS es una beta sin firma Developer ID ni notarización. No está lista para distribuirse como producto comercial terminado.
 
+## Descargas
+
+La beta para macOS Apple Silicon se publica en [GitHub Releases](https://github.com/Kraben/voxel-swarm/releases). Consulta las limitaciones y el checksum antes de usarla. Los fuentes se pueden descargar desde este repositorio.
+
 ## Documentación y estructura
 
 - [Manual de la app](docs/APP-MANUAL.md)

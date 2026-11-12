@@ -1,0 +1,58 @@
+{
+  "project": "Enjambre de Vóxeles",
+  "working_name": false,
+  "version": "0.6.0",
+  "date": "2026-11-10",
+  "validated_distribution": "macOS Apple Silicon beta",
+  "platforms_future": [
+    "Windows",
+    "Linux",
+    "ESP32 Maker"
+  ],
+  "tools": [
+    {
+      "id": "core_search_web",
+      "label": "Buscar fuentes públicas",
+      "state": "implemented",
+      "permission": "Sin confirmación; depende de la consulta y permisos"
+    },
+    {
+      "id": "core_find_files",
+      "label": "Encontrar archivos por nombre o extensión",
+      "state": "implemented",
+      "permission": "Confirmación de búsqueda"
+    },
+    {
+      "id": "core_group_results",
+      "label": "Preparar carpeta con resultados recientes",
+      "state": "implemented",
+      "permission": "Vista previa y confirmación de movimientos"
+    },
+    {
+      "id": "core_undo_group",
+      "label": "Preparar restauración de agrupación",
+      "state": "implemented",
+      "permission": "Vista previa y confirmación de restauración"
+    },
+    {
+      "id": "core_desktop_plan",
+      "label": "Organizar el Escritorio en carpetas directas o deshacer",
+      "state": "implemented",
+      "permission": "Vista previa y confirmación"
+    },
+    {
+      "id": "core_open_app",
+      "label": "Abrir apps de la lista autorizada",
+      "state": "implemented",
+      "permission": "Confirmación y lista permitida"
+    }
+  ],
+  "cloud_billing": "User-owned API key; no managed credits implemented",
+  "voice_local_stt": false,
+  "continuous_listening": false,
+  "payments_implemented": false,
+  "paywall_implemented": false,
+  "commercial_brand_approved": false,
+  "representation": "Enjambre de Vóxeles holográfico; esfera de luz cyan formada por cubos de datos",
+  "asset_status": "Provisional original procedural asset; requested JPG not provided"
+}
